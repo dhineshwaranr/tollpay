@@ -1,0 +1,22 @@
+{
+  "bundle" : "ddl-dt-theme-bootstrap3",
+  "dependencies": [ "bootstrap3", "datatables" ],
+  "assets": [
+    {
+      "name": "datatables-plugins",
+      "version": "ca6ec50",
+      "type": "js",
+      "locations": {
+        "cdn": "/webjars/datatables-plugins/ca6ec50/integration/bootstrap/3/dataTables.bootstrap.js"
+      }
+    },
+    {
+      "name": "datatables-plugins",
+      "version": "ca6ec50",
+      "type": "css",
+      "locations": {
+        "cdn": "/webjars/datatables-plugins/ca6ec50/integration/bootstrap/3/dataTables.bootstrap.css"
+      }
+    }
+  ]
+}

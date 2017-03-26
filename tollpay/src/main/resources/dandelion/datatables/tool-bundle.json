@@ -1,0 +1,30 @@
+{
+  "bundle" : "tool-bundle",
+  "assets": [
+
+    {
+      "name": "datatables",
+      "version": "1.10.4",
+      "type": "js",
+      "locations": {
+        "cdn": "/webjars/datatables/1.10.4/js/jquery.dataTables.min.js"
+      }
+    },
+    {
+      "name": "datatables",
+      "version": "1.10.4",
+      "type": "css",
+      "locations": {
+        "cdn": "/webjars/datatables/1.10.4/css/jquery.dataTables.min.css"
+      }
+    },
+    {
+      "name": "dandelion-datatables",
+      "version": "0.10.1",
+      "type": "js",
+      "locations": {
+        "delegate": "dandelion-datatables.js"
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"	
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Tool</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+</head>
+<style type="text/css">
+	@font-face {
+    font-family: 'lato-thin';
+    src: url('/fonts/lato/lato-thin-webfont.eot');
+    src: url('/fonts/lato/lato-thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/lato/lato-thin-webfont.woff') format('woff'),
+         url('/fonts/lato/lato-thin-webfont.ttf') format('truetype'),
+         url('/fonts/lato/lato-thin-webfont.svg#Sri-TSCRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+   }
+   body { font-family: "lato-thin", Verdana }
+</style>
+<body>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="panel panel-default" layout:fragment="content-right">
+			    <div class="search-panel">
+			        <!-- <a th:href="@{/admin/users/new}" href="/admin/users/new">
+			            <button type="button" id="add-new-user" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span><span th:text="#{${'users.new.button'}}"></span></button>
+			        </a>
+			        <button type="button" id="delete-select-users" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span><span th:text="#{${'users.delete.selected.button'}}"></span></button> -->
+			    </div>
+			    <div class="table-panel">
+			        <div class="table-responsive">
+			            <table id="user-list-table" class="table table-striped" dt:table="true" dt:url="@{/users}" dt:serverside="true" dt:processing="false" dt:pagination="true" >
+			                <thead>
+			                <tr>
+			                	<th dt:property="id">Id</th>
+			                    <th dt:property="lastName" dt:renderFunction="linkRenderer">Surname</th>
+			                    <th dt:property="firstName">Name</th>
+			                    <th dt:property="age">Age</th>
+			                </tr>
+			                </thead>
+			            </table>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="col-lg-6">B</div>	
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+	function linkRenderer(data, type, full) {
+	    return '<span><a href="users/get-user-by-rfid' + full.id + '"><span>' + data + '</span></a></span>'
+	}
+
+</script>
+</body>
+</html>
