@@ -10,18 +10,17 @@ import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//@Entity
-//@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "vehical_seq")
+@Entity
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "vehical_seq")
 public class Vehical extends AbstractEntity{
 
 	private String vehicalNo;
-	private String vehicalRfId;
 	private String manufacturer;
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-	public User getUser() {
+    public User getUser() {
 		return user;
 	}
 	public void setUser(User user) {
@@ -32,12 +31,6 @@ public class Vehical extends AbstractEntity{
 	}
 	public void setVehicalNo(String vehicalNo) {
 		this.vehicalNo = vehicalNo;
-	}
-	public String getVehicalRfId() {
-		return vehicalRfId;
-	}
-	public void setVehicalRfId(String vehicalRfId) {
-		this.vehicalRfId = vehicalRfId;
 	}
 	public String getManufacturer() {
 		return manufacturer;

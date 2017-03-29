@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -17,7 +18,7 @@ public class User extends AbstractEntity{
 	private String firstName;
 	private String lastName;
 	private int age;
-	//private Set<Vehical> vehical;
+	private Set<Vehical> vehical;
 		
 	public String getFirstName() {
 		return firstName;
@@ -38,14 +39,14 @@ public class User extends AbstractEntity{
 		this.age = age;
 	}
 	
-	/*@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
+	@OneToMany(orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
 	public Set<Vehical> getVehical() {
 		return vehical;
 	}
 	public void setVehical(Set<Vehical> vehical) {
 		this.vehical = vehical;
-	}*/
+	}
 	
 	
 }

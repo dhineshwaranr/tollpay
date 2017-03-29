@@ -18,32 +18,45 @@ import com.github.dandelion.datatables.core.ajax.DataSet;
 import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
 import com.github.dandelion.datatables.core.ajax.DatatablesResponse;
 import com.github.dandelion.datatables.extras.spring3.ajax.DatatablesParams;
+import com.toll.domain.RfId;
 import com.toll.domain.User;
+import com.toll.domain.Vehical;
+import com.toll.dto.RfIdDto;
 import com.toll.dto.UserDto;
+import com.toll.repository.RfIdRepository;
 import com.toll.repository.UserRepository;
+import com.toll.repository.VehicalRepository;
 import com.toll.service.UserService;
 import com.toll.util.DandelionHelper;
 
 @Controller("userController")
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/rfId")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 	
 	@Autowired
-	private UserRepository userRepository;	
+	private UserRepository userRepository;
+	
+	@Autowired
+	private VehicalRepository VehicalRepository;
+	
+	@Autowired
+	private RfIdRepository rfIdRepository;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public DatatablesResponse<UserDto> list(@DatatablesParams DatatablesCriterias datatablesCriterias) {
-			System.out.println(datatablesCriterias);
-			Page<User> page = null;
+    public DatatablesResponse<RfIdDto> list(@DatatablesParams DatatablesCriterias datatablesCriterias) {
+			Page<RfId> page = null;
 			Pageable pageable = DandelionHelper.buildPageable(datatablesCriterias);
-			page = userRepository.findAll(pageable);
-	        
-	        System.out.println("PsgSiz :"+page.getSize());
-	        DataSet<UserDto> userDataSet = new DataSet<>(getUserDtoList(page.getContent()), page.getTotalElements(), page.getTotalElements());
+			if (!StringUtils.isBlank(datatablesCriterias.getSearch())) {
+				page = rfIdRepository.findByVehicalNoLikeIgnoreCase("%"+datatablesCriterias.getSearch().toLowerCase() +"%", pageable); 
+			}
+			else {
+				page = rfIdRepository.findAll(pageable);
+			}
+			DataSet<RfIdDto> userDataSet = new DataSet<>(getRfIdDtoList(page.getContent()), page.getTotalElements(), page.getTotalElements());
 	        return DatatablesResponse.build(userDataSet, datatablesCriterias);
 		
     }
@@ -55,14 +68,13 @@ public class UserController {
 		
     }
 	
-	private List<UserDto> getUserDtoList(List<User> users) {
-        List<UserDto> userDtoList = new ArrayList<>();
-        for (User user : users) {
-        	System.out.println(user.getFirstName());
-            UserDto userDto = new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getAge());
-            userDtoList.add(userDto);
+	private List<RfIdDto> getRfIdDtoList(List<RfId> rfIds) {
+        List<RfIdDto> rfIdDtoList = new ArrayList<>();
+        for (RfId rfId : rfIds) {
+        	RfIdDto userDto = new RfIdDto(rfId.getId(), rfId.getRfId(), rfId.getVehical().getVehicalNo());
+        	rfIdDtoList.add(userDto);
         }
-        return userDtoList;
+        return rfIdDtoList;
     }
 	
 }

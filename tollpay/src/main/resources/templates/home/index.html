@@ -35,13 +35,13 @@
 			    </div>
 			    <div class="table-panel">
 			        <div class="table-responsive">
-			            <table id="user-list-table" class="table table-striped" dt:table="true" dt:url="@{/users}" dt:serverside="true" dt:processing="true" dt:pagination="true" >
+			            <table id="user-list-table" class="table table-striped" dt:table="true" dt:url="@{/rfId}" dt:serverside="true" dt:processing="true" dt:pagination="true" >
 			                <thead>
 			                <tr>
 			                	<th dt:property="id">Id</th>
-			                    <th dt:property="lastName" dt:renderFunction="linkRenderer">Surname</th>
-			                    <th dt:property="firstName">Name</th>
-			                    <th dt:property="age">Age</th>
+			                    <th dt:property="rfId" dt:renderFunction="linkRenderer">RFID</th>
+			                    <th dt:property="vehicalId">Vehical No</th>
+			                    <th dt:renderingFunxtion="addLinks">Pay</th>
 			                </tr>
 			                </thead>
 			            </table>
@@ -59,8 +59,15 @@
 <script type="text/javascript">
 
 	function linkRenderer(data, type, full) {
-	    return '<span><a href="users/get-user-by-rfid' + full.id + '"><span>' + data + '</span></a></span>'
+	    return '<span><a href="users/get-user-by-rfid/' + full.id + '"><span>' + data + '</span></a></span>'
 	}
+	
+	function addLinks(data, type, full) {
+        /*<![CDATA[*/
+        return  '<span><a href="/admin/users/' + data + '"><button type="button" class="btn btn-default no-shadow btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></a></span>' +
+                ( '<span><button type="button" class="btn btn-danger btn-xs delete-user" value="' + data + '"><span class="glyphicon glyphicon-trash"></span></button></span>' : "");
+        /*]]>*/
+    }
 
 </script>
 </body>
