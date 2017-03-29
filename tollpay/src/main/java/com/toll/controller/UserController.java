@@ -40,15 +40,8 @@ public class UserController {
 			System.out.println(datatablesCriterias);
 			Page<User> page = null;
 			Pageable pageable = DandelionHelper.buildPageable(datatablesCriterias);
+			page = userRepository.findAll(pageable);
 	        
-	        if (!StringUtils.isBlank(datatablesCriterias.getSearch())) {
-	            /*page = userRepository.findByFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCaseOrEmailLikeIgnoreCaseAndDeleted(
-	                    "%" + datatablesCriterias.getSearch().toLowerCase() + "%",
-	                    false,
-	                    pageable);*/
-	        } else {
-	            page = userRepository.findAll(pageable);
-	        }
 	        System.out.println("PsgSiz :"+page.getSize());
 	        DataSet<UserDto> userDataSet = new DataSet<>(getUserDtoList(page.getContent()), page.getTotalElements(), page.getTotalElements());
 	        return DatatablesResponse.build(userDataSet, datatablesCriterias);

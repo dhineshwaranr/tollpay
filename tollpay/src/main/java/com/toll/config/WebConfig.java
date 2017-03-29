@@ -1,49 +1,64 @@
 package com.toll.config;
 
+import java.util.List;
+
 import javax.servlet.Filter;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+ 
 
 import com.github.dandelion.core.web.DandelionFilter;
 import com.github.dandelion.core.web.DandelionServlet;
 import com.github.dandelion.datatables.core.web.filter.DatatablesFilter;
-import com.github.dandelion.datatables.thymeleaf.dialect.DataTablesDialect;
-import com.github.dandelion.thymeleaf.dialect.DandelionDialect;
+import com.github.dandelion.datatables.extras.spring3.ajax.DatatablesCriteriasMethodArgumentResolver;
 
 @Configuration
 public class WebConfig {
 
 	@Bean
-	public DandelionDialect dandelionDialect()
-	{
-			return new DandelionDialect();
-	}
+    public Filter dandelionFilter() {
+        return new DandelionFilter();
+    }
 
-	@Bean
-	public DataTablesDialect dataTablesDialect()
-	{
-			return new DataTablesDialect();
-	}
+    @Bean
+    public Filter datatablesFilter() {
+        return new DatatablesFilter();
+    }
+    
+    @Bean
+    public WebConfigAdapter webConfigAdapter() {
+        return new WebConfigAdapter();
+    }
+    
+    protected static class WebConfigAdapter extends WebMvcConfigurerAdapter{
+    	
+    	@Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-	@Bean
-	public FilterRegistrationBean filterRegistrationBean()
-	{
-			FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-			filterRegistrationBean.setFilter(new DandelionFilter());
-			return filterRegistrationBean;
-	}
-
-	@Bean
-	public ServletRegistrationBean servletRegistrationBean()
-	{
-			ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
-			servletRegistrationBean.setServlet(new DandelionServlet());
-			servletRegistrationBean.addUrlMappings("/dandelion-assets/*");
-			servletRegistrationBean.setName("dandelionServlet");
-			return servletRegistrationBean;
-	}
-	
+            registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        }
+    	
+    	@Override
+        public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+            PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+            resolver.setFallbackPageable(new PageRequest(0, 5));
+            argumentResolvers.add(resolver);
+            argumentResolvers.add(new DatatablesCriteriasMethodArgumentResolver());
+        }
+    	
+    	@Override
+        public void configureContentNegotiation(
+                ContentNegotiationConfigurer configurer) {
+            configurer.favorPathExtension(true).favorParameter(true);
+        }
+    }
 }
