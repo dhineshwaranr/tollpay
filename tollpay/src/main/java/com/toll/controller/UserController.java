@@ -67,10 +67,12 @@ public class UserController {
     public String getByRfId(@PathVariable("rfId") RfId rfId, Model model) {
 		System.out.println("Test");
 		Vehical vehical = vehicalRepository.findOne(rfId.getVehical().getId());
+		
 		User user = userRepository.findOne(vehical.getUser().getId());
-		UserDto userDto = new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getAge(), vehical.getVehicalNo());
-		System.out.println(userDto.getFirstName());
-		model.addAttribute("userDto", userDto);
+		//UserDto userDto = new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getAge(), vehical.getVehicalNo());
+		System.out.println("--->"+vehical.isAllowed());
+		model.addAttribute("vehicalDetails",vehical);
+		model.addAttribute("userDto", user);
 		return "home/user";
 	}
 	
