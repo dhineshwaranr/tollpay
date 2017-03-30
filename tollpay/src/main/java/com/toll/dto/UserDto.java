@@ -8,14 +8,24 @@ public class UserDto {
 	private String firstName;
 	private String lastName;
 	private int age;
+	private String vehicalNo;
 	
-	public UserDto(Long id, String firstName, String lastName,int age) {
+	public UserDto(Long id, String firstName, String lastName, int age, String vehicalNo) {
         setId(id);
         setFirstName(firstName);
         setLastName(lastName);
         setAge(age);
+        setVehicalNo(vehicalNo);
     }
 	
+	public String getVehicalNo() {
+		return vehicalNo;
+	}
+
+	public void setVehicalNo(String vehicalNo) {
+		this.vehicalNo = vehicalNo;
+	}
+
 	public Long getId() {
 		return id;
 	}

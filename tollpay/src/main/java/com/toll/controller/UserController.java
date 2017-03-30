@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +42,7 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private VehicalRepository VehicalRepository;
+	private VehicalRepository vehicalRepository;
 	
 	@Autowired
 	private RfIdRepository rfIdRepository;
@@ -61,17 +63,21 @@ public class UserController {
 		
     }
 	
-	@RequestMapping(value = "/get-user-by-rfid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public void GetByRfId(@RequestParam("rfid") Long id) {
-			//return null;
-		
-    }
+	@RequestMapping(value = "/users/{rfId}", method = RequestMethod.GET)
+    public String getByRfId(@PathVariable("rfId") RfId rfId, Model model) {
+		System.out.println("Test");
+		Vehical vehical = vehicalRepository.findOne(rfId.getVehical().getId());
+		User user = userRepository.findOne(vehical.getUser().getId());
+		UserDto userDto = new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getAge(), vehical.getVehicalNo());
+		System.out.println(userDto.getFirstName());
+		model.addAttribute("userDto", userDto);
+		return "home/user";
+	}
 	
 	private List<RfIdDto> getRfIdDtoList(List<RfId> rfIds) {
         List<RfIdDto> rfIdDtoList = new ArrayList<>();
         for (RfId rfId : rfIds) {
-        	RfIdDto userDto = new RfIdDto(rfId.getId(), rfId.getRfId(), rfId.getVehical().getVehicalNo());
+        	RfIdDto userDto = new RfIdDto(rfId.getId(), rfId.getRfId(), rfId.getVehical().getVehicalNo(), rfId.getVehical().getUser().getId());
         	rfIdDtoList.add(userDto);
         }
         return rfIdDtoList;

@@ -25,7 +25,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-12">
 			<div class="panel panel-default" layout:fragment="content-right">
 			    <div class="search-panel">
 			        <!-- <a th:href="@{/admin/users/new}" href="/admin/users/new">
@@ -41,7 +41,7 @@
 			                	<th dt:property="id">Id</th>
 			                    <th dt:property="rfId" dt:renderFunction="linkRenderer">RFID</th>
 			                    <th dt:property="vehicalId">Vehical No</th>
-			                    <th dt:renderingFunxtion="addLinks">Pay</th>
+			                    <th dt:property="userId" dt:renderFunction="addLinks" class="buttongroup-column"></th>
 			                </tr>
 			                </thead>
 			            </table>
@@ -49,7 +49,6 @@
 			    </div>
 			</div>
 		</div>
-		<div class="col-lg-6">B</div>	
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
@@ -59,13 +58,14 @@
 <script type="text/javascript">
 
 	function linkRenderer(data, type, full) {
-	    return '<span><a href="users/get-user-by-rfid/' + full.id + '"><span>' + data + '</span></a></span>'
+	    return '<span><a href="rfId/users/' + full.id + '"><span>' + data + '</span></a></span>'
 	}
 	
 	function addLinks(data, type, full) {
+		//debugger
         /*<![CDATA[*/
-        return  '<span><a href="/admin/users/' + data + '"><button type="button" class="btn btn-default no-shadow btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></a></span>' +
-                ( '<span><button type="button" class="btn btn-danger btn-xs delete-user" value="' + data + '"><span class="glyphicon glyphicon-trash"></span></button></span>' : "");
+        return '<span><a href="/admin/users/' + full.userId + '"><button type="button" class="btn btn-default no-shadow btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></a></span>' +
+        		'<span><button type="button" class="btn btn-danger btn-xs delete-user" value="' + full.userId + '"><span class="glyphicon glyphicon-trash"></span></button></span>';
         /*]]>*/
     }
 
