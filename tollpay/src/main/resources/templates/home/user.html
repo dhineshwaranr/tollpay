@@ -30,6 +30,37 @@
    .vehical-allow, .vehical-block, .vehical-no-records, .vehical-alert-cop{
    		color:black;
    }
+   .header-row{
+   	margin-bottom:25px;
+   }
+   .stop, .wait, .go{
+	    display:inline-block;
+	}
+	.circle {
+	  margin: 1em 0;
+    background-color: transparent;
+    color: #222;
+    text-align: center;
+    width: 25%;
+	}
+	.circle:after {
+	  display: block;
+	  padding-bottom: 100%;
+	  width: 100%;
+	  height: 0;
+	  border-radius: 50%;
+	  content: "";
+	}
+	.circle.signal-stop:after {
+	  background-color: red;
+	}
+	.circle.signal-wait:after {
+	  background-color: orange;
+	}
+	.circle.signal-go:after {
+	  background-color: green;
+	}
+
    
 </style>
 <body>
@@ -39,47 +70,87 @@
 		<div class="col-lg-12">
 			<div class="user-details-panel">
 				<div class="row">
-					<div class="col-lg-10">
+					<div class="col-lg-2">
+						<img src="/images/profile-user.png" width="100%" height="auto" alt=""/>
+					</div>
+					<div class="col-lg-7">
 						<div class="user-name">
 							<h2 th:text="${userDto.firstName}"><b>User Name</b></h2>
 						</div>
 					</div>
-					<div class="clock-timer col-lg-2">
-						Clock
+					<div class="clock-timer col-lg-3">
+						<div class="row">
+							<div class="watch"></div>
+						</div>
+						<div class="row">
+							<div class="circle stop">
+							  
+							</div>
+							<div class="circle wait">
+							  
+							</div>
+							<div class="circle go">
+							  
+							</div>
+						</div>
 					</div>
 				</div>
 				<hr />
 				<div class="row">
-					<div class="col-lg-6 vehical-details">
-						<div class="row">
+					<div class="col-lg-8 vehical-details">
+						<div class="row header-row">
 							<div class="col-lg-7">
-								<span class="vehical-details-heading">Vehical</span>
+								<span class="vehical-details-heading">Vehical Details</span>
 							</div>
-							<div class="col-lg-5">
-								<p>
-									<span class="vehical-allow btn btn-warning" th:if="${vehicalDetails.allowed}">Block</span>
-									<span class="vehical-block btn btn-success" th:unless="${vehicalDetails.allowed}">Allowed</span>
+							<div class="col-lg-5 float-left">
+									<span class="float-left vehical-allow btn btn-warning" th:if="${vehicalDetails.allowed}">Block</span>
+									<span class=" float-leftvehical-block btn btn-success" th:unless="${vehicalDetails.allowed}">Allowed</span>
 									
-									<span class="vehical-alert-cop btn btn-danger" th:if="${vehicalDetails.anyCrimicalCase}">Alert Cops</span>
-									<span class="vehical-no-records btn btn-success" th:unless="${vehicalDetails.anyCrimicalCase}">No Records</span>
-								</p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<table>
-									<tr><td th:text="${vehicalDetails.vehicalNo}"></td></tr>
-									<tr><td th:text="${vehicalDetails.manufacturer}"></td></tr>
-									<tr><td th:text="${vehicalDetails.type}"></td></tr>
-									<tr><td th:text="${vehicalDetails.totalCapacity}"></td></tr>
-								</table>
-							</div>
-							<div class="col-lg-6">
+									<span class="float-left vehical-alert-cop btn btn-danger" th:if="${vehicalDetails.anyCrimicalCase}">Alert Cops</span>
+									<span class="float-left vehical-no-records btn btn-success" th:unless="${vehicalDetails.anyCrimicalCase}">No Records</span>
 								
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<img src="/images/Auto-car.png" width="100%" height="auto" alt=""/>
+							</div>
+							<div class="col-lg-8">
+								<table class="table vehical-details-table">
+									<tr>
+										<td>Vehical No : </td>
+										<td th:text="${vehicalDetails.vehicalNo}"></td>
+									</tr>
+									<tr>
+										<td>Manufacturer : </td>
+										<td th:text="${vehicalDetails.manufacturer}"></td>
+									</tr>
+									<tr>
+										<td>Type : </td>
+										<td th:text="${vehicalDetails.type}"></td>
+									</tr>
+									<tr>
+										<td>Capacity : </td>
+										<td th:text="${vehicalDetails.totalCapacity}"></td>
+									</tr>
+								</table>
+							</div>
+							
+						</div>
+						<div class="row">
+							<div class="collapse" id="collapseExample">
+							  <div class="card card-block">
+							    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+							  </div>
+							</div>
+							<p>
+							  <a class="glyphicon glyphicon-circle-arrow-down" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+							    
+							  </a>
+							</p>
+						</div>
 					</div>
-					<div class="col-lg-6 trip-details">
+					<div class="col-lg-4 trip-details">
 						<h4>Trip Details</h4>
 					</div>
 				</div>
@@ -90,11 +161,47 @@
 <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/clock.js"></script>
 
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$('.watch').clock({font_size:50 , color:'TOMATO'});
 	
+	callme(1);
+    
+});
 
+function callme(i) {
+	setTimeout(function(){ selectLight(i) }, 3000);
+}
+
+function selectLight(light) {
+	switch(light) {
+	    case 1:
+	        $(".stop").addClass("signal-stop");
+	        $(".wait").removeClass("signal-wait");
+	        $(".go").removeClass("signal-go");
+	        callme(2);
+	        break;
+	    case 2:
+	        $(".stop").removeClass("signal-stop");
+	        $(".wait").addClass("signal-wait");
+	        $(".go").removeClass("signal-go");
+	        callme(3);
+	        break;
+	    case 3:
+	        $(".stop").removeClass("signal-stop");
+	        $(".wait").removeClass("signal-wait");
+	        $(".go").addClass("signal-go");
+	        callme(1);
+	        break;    
+	    default:
+        	$(".stop").addClass(".signal-stop");
+	        $(".wait").removeClass(".signal-wait");
+	        $(".go").removeClass(".signal-go");
+	        break;
+	}
+}
 </script>
 </body>
 </html>
