@@ -23,6 +23,14 @@
    .vehical-details{
    		border-right:1px solid #eee;
    }
+   .vehical-details-heading{
+   		font:bold;
+   		font-size:25px !important;
+   }
+   .vehical-allow, .vehical-block, .vehical-no-records, .vehical-alert-cop{
+   		color:black;
+   }
+   
 </style>
 <body>
 
@@ -44,22 +52,27 @@
 				<div class="row">
 					<div class="col-lg-6 vehical-details">
 						<div class="row">
-							<div class="col-lg-6">
-								<h4>Vehical Details</h4>
+							<div class="col-lg-7">
+								<span class="vehical-details-heading">Vehical</span>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-lg-5">
 								<p>
-									<span th:if="${vehicalDetails.anyCrimicalCase}">True</span>
-									<span th:unless="${vehicalDetails.anyCrimicalCase}">False</span>
+									<span class="vehical-allow btn btn-warning" th:if="${vehicalDetails.allowed}">Block</span>
+									<span class="vehical-block btn btn-success" th:unless="${vehicalDetails.allowed}">Allowed</span>
 									
-									<span th:if="${vehicalDetails.allowed}">True</span>
-									<span th:unless="${vehicalDetails.allowed}">False</span>
+									<span class="vehical-alert-cop btn btn-danger" th:if="${vehicalDetails.anyCrimicalCase}">Alert Cops</span>
+									<span class="vehical-no-records btn btn-success" th:unless="${vehicalDetails.anyCrimicalCase}">No Records</span>
 								</p>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								<span th:text="${vehicalDetails.vehicalNo}"></span>
+								<table>
+									<tr><td th:text="${vehicalDetails.vehicalNo}"></td></tr>
+									<tr><td th:text="${vehicalDetails.manufacturer}"></td></tr>
+									<tr><td th:text="${vehicalDetails.type}"></td></tr>
+									<tr><td th:text="${vehicalDetails.totalCapacity}"></td></tr>
+								</table>
 							</div>
 							<div class="col-lg-6">
 								
