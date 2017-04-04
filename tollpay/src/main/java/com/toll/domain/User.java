@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,7 +20,15 @@ public class User extends AbstractEntity{
 	private String lastName;
 	private int age;
 	private Set<Vehical> vehical;
-		
+	private Address userAddress;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public Address getUserAddress() {
+		return userAddress;
+	}
+	public void setUserAddress(Address userAddress) {
+		this.userAddress = userAddress;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

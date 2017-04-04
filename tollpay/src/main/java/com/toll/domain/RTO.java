@@ -10,16 +10,15 @@ import javax.persistence.SequenceGenerator;
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "rto_seq")
 public class RTO extends AbstractEntity{
 
-	private Address address;
-	
+	private Address rtoAddress;
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	public Address getAddress() {
-		return address;
+	public Address getRtoAddress() {
+		return rtoAddress;
 	}
-	public void setAddress(Address address) {
-		this.address = address;
+
+	public void setRtoAddress(Address rtoAddress) {
+		this.rtoAddress = rtoAddress;
 	}
-	
-	
-	
+		
 }

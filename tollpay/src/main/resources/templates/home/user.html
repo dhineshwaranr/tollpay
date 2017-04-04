@@ -60,7 +60,23 @@
 	.circle.signal-go:after {
 	  background-color: green;
 	}
-
+	
+	.user-details span{
+		display:block;
+	}
+	.trip-destination-from, .trip-destination-to {
+		border: 1px solid green;
+    	//padding: 10px 60px 10px 40px;
+    	width:150px; height:30px; 
+    	display: inline-block;
+    	color:green;
+    	border-top-left-radius: 1em;
+    	border-bottom-right-radius: 1em;
+    	text-align:center;
+	}
+	h4{
+		margin: 0px 0px 35px 0px !important;
+	}
    
 </style>
 <body>
@@ -74,8 +90,13 @@
 						<img src="/images/profile-user.png" width="100%" height="auto" alt=""/>
 					</div>
 					<div class="col-lg-7">
-						<div class="user-name">
+						<div class="user-details">
 							<h2 th:text="${userDto.firstName}"><b>User Name</b></h2>
+							<span th:text="${userDto.age}+' '+Years"></span>
+							<span th:text="${userDto.userAddress.line1} +', '+${userDto.userAddress.line2}+', '+${userDto.userAddress.line3} "></span>
+							<span th:text="${userDto.userAddress.city} +', '+${userDto.userAddress.state} +', '+${userDto.userAddress.country}"></span>
+							<span>09876543210</span>
+							<span>B+(ve)</span>
 						</div>
 					</div>
 					<div class="clock-timer col-lg-3">
@@ -140,7 +161,7 @@
 						<div class="row">
 							<div class="collapse" id="collapseExample">
 							  <div class="card card-block">
-							    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+							    Additional Information Section. Add any data which related to the vehical or to the owner(person).
 							  </div>
 							</div>
 							<p>
@@ -152,6 +173,36 @@
 					</div>
 					<div class="col-lg-4 trip-details">
 						<h4>Trip Details</h4>
+						<div class="row trip-places">
+							<div class="col-md-offset-1">
+								<span class="trip-destination-from" th:text="${tripPlan.destinationFrom}"></span>
+								<span class="">----></span>
+								<span class="trip-destination-to" th:text="${tripPlan.destinationTo}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<table>
+								<tr>
+									<td>Travel Date :</td>
+									<td><h5 th:text="${#dates.format(tripPlan.createdDate, 'dd-MM-yyyy')}"></h5></td>
+								</tr>
+								<tr>
+									<td>Travel Type :</td>
+									<td><h5 th:text="${tripPlan.passType}"></h5></td>
+								</tr>
+								<tr>
+									<td>Travel fsre :</td>
+									<td><h5>100 rs</h5></td>
+								</tr>
+							</table>
+							
+						</div>
+						<div class="row">
+							<div class="col-md-offset-8">
+								<button class="btn">Cancel</button>
+								<button class="btn">Pay</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

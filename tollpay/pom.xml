@@ -68,11 +68,14 @@
 			<version>2.7</version>
 		</dependency>
 		
-		<!-- <dependency>
-			<groupId>org.jadira.usertype</groupId>
-			<artifactId>usertype.core</artifactId>
-			<version>3.2.0.GA</version>
-		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.jadira.usertype/usertype.core -->
+		<dependency>
+		    <groupId>org.jadira.usertype</groupId>
+		    <artifactId>usertype.core</artifactId>
+		    <version>5.0.0.GA</version>
+		</dependency>
+
+		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>

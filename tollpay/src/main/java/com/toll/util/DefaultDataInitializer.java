@@ -2,6 +2,7 @@ package com.toll.util;
 
 import java.util.UUID;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +11,14 @@ import org.springframework.stereotype.Component;
 import com.toll.domain.Address;
 import com.toll.domain.RTO;
 import com.toll.domain.RfId;
+import com.toll.domain.TripPlan;
+import com.toll.domain.TripPlan.PassType;
 import com.toll.domain.User;
 import com.toll.domain.Vehical;
 import com.toll.domain.Vehical.VehicalType;
 import com.toll.repository.RTORepository;
 import com.toll.repository.RfIdRepository;
+import com.toll.repository.TripPlanRepository;
 import com.toll.repository.UserRepository;
 import com.toll.repository.VehicalRepository;
 
@@ -33,6 +37,9 @@ public class DefaultDataInitializer implements InitializingBean{
 	@Autowired
 	private RTORepository rtoRepository;
 	
+	@Autowired
+	private TripPlanRepository tripPlanRepository;
+		
 	private static final String FIRST_NAME = "Test_user_";
 	private static final String LAST_NAME = "";
 	private static final int AGE = 20;
@@ -46,6 +53,7 @@ public class DefaultDataInitializer implements InitializingBean{
 		runAddressAndRTO();
 		runMeFirst();
 		runMeSecond();
+		runMeThird();
 	}
 	
 	private void runAddressAndRTO() {
@@ -61,7 +69,7 @@ public class DefaultDataInitializer implements InitializingBean{
 				address.setCity("City_"+String.valueOf(i));
 				address.setState("State_"+String.valueOf(i));
 				address.setCountry("Country_"+String.valueOf(i));
-				rto.setAddress(address);
+				rto.setRtoAddress(address);
 				rtoRepository.save(rto);
 			}
 		}
@@ -71,10 +79,21 @@ public class DefaultDataInitializer implements InitializingBean{
 		User isUserAvailable = userRepository.findOne(1L);
 		if(isUserAvailable == null){
 			for(int i = 0 ; i <= 20 ; i++){
+				
+				Address address = new Address();
+				address.setLine1("Line user_"+String.valueOf(i));
+				address.setLine2("Line user_"+String.valueOf(i));
+				address.setLine3("Line user_"+String.valueOf(i));
+				address.setLine4("Line user_"+String.valueOf(i));
+				address.setCity("City_user_"+String.valueOf(i));
+				address.setState("State_user_"+String.valueOf(i));
+				address.setCountry("Country_user_"+String.valueOf(i));
+				
 				User user = new User();
 				user.setFirstName(FIRST_NAME+i);
 				user.setLastName(String.valueOf(i));
 				user.setAge(AGE+i);
+				user.setUserAddress(address);
 				userRepository.save(user);
 			}
 		}
@@ -105,6 +124,22 @@ public class DefaultDataInitializer implements InitializingBean{
 				rfIdRepository.save(rfId);
 			}
 		}
+	}
+	
+	private void runMeThird(){
+		if(tripPlanRepository.findOne(1L) == null){
+			for(Long i = 0L ; i<=20;i++ ) {
+				User user = userRepository.findOne(i+1);
+				TripPlan tripPlan = new TripPlan();
+				tripPlan.setDestinationFrom("From_"+i);
+				tripPlan.setDestinationTo("To_"+i);
+				tripPlan.setPassType(PassType.SINGLE);
+				tripPlan.setUser(user);
+				tripPlan.setTravelDate(new DateTime());
+				
+				tripPlanRepository.save(tripPlan);
+			}
+		}	
 	}
 	
 	public Long getVehicalEndNo(Long no) {
